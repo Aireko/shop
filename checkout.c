@@ -5,6 +5,12 @@
 #include <stdio.h>
 #include "cart.h"
 
+long checkout(const struct cart *cart)
+{
+    long total = cart->subtotal_cents;
+    return total + shipping_cents(total);
+}
+
 long shipping_cents(long total)
 {
     return total > 0 ? 599 : 0;

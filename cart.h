@@ -10,5 +10,6 @@ struct cart {
 long checkout(const struct cart *cart);
 long shipping_cents(long total);
 long round_cents(long value, long divisor);
+void print_receipt(const struct cart *cart, long discounted);
 
 #endif

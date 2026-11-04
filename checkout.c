@@ -15,7 +15,7 @@ long apply_discount(long cents, int percent)
     if (percent > MAX_DISCOUNT_PERCENT) {
         percent = MAX_DISCOUNT_PERCENT;
     }
-    return cents - cents * percent / 100;
+    return cents - round_cents(cents * percent, 100);
 }
 
 long checkout(const struct cart *cart)

@@ -5,9 +5,24 @@
 #include <stdio.h>
 #include "cart.h"
 
+#define MAX_DISCOUNT_PERCENT 100
+
+long apply_discount(long cents, int percent)
+{
+    if (percent < 0) {
+        percent = 0;
+    }
+    if (percent > MAX_DISCOUNT_PERCENT) {
+        percent = MAX_DISCOUNT_PERCENT;
+    }
+    return cents - round_cents(cents * percent, 100);
+}
+
 long checkout(const struct cart *cart)
 {
     long total = cart->subtotal_cents;
+    total = apply_discount(total, cart->coupon_percent);
+    total = apply_discount(total, cart->member_percent);
     return total + shipping_cents(total);
 }
 

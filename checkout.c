@@ -13,6 +13,9 @@ long checkout(const struct cart *cart)
 
 long shipping_cents(long total)
 {
+    if (total >= 5000) {
+        return 0;
+    }
     return total > 0 ? 599 : 0;
 }
 

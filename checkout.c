@@ -7,6 +7,11 @@
 
 #define MAX_DISCOUNT_PERCENT 100
 
+long quote_price(const struct item *item, int percent)
+{
+    return apply_discount(item->cents, percent) * item->qty;
+}
+
 long apply_discount(long cents, int percent)
 {
     if (percent < 0) {

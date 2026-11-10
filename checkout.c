@@ -18,6 +18,7 @@ long apply_discount(long cents, int percent)
         percent = 0;
     }
     if (percent > MAX_DISCOUNT_PERCENT) {
+        printf("discount capped at %d%%\n", MAX_DISCOUNT_PERCENT);
         percent = MAX_DISCOUNT_PERCENT;
     }
     return cents - round_cents(cents * percent, 100);

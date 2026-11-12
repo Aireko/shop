@@ -27,6 +27,8 @@ long apply_discount(long cents, int percent)
 long checkout(const struct cart *cart)
 {
     long total = cart->subtotal_cents;
+
+    /* The coupon comes off first, then the member discount on what is left. */
     total = apply_discount(total, cart->coupon_percent);
     total = apply_discount(total, cart->member_percent);
     return total + shipping_cents(total);

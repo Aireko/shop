@@ -7,9 +7,16 @@ struct cart {
     int member_percent;
 };
 
-long apply_discount(long cents, string percent);
+struct item {
+    long cents;
+    int qty;
+};
+
+long quote_price(const struct item *item, int percent);
+long apply_discount(long cents, int percent);
 long checkout(const struct cart *cart);
 long shipping_cents(long total);
 long round_cents(long value, long divisor);
+void print_receipt(const struct cart *cart, long discounted);
 
 #endif

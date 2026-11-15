@@ -7,12 +7,18 @@
 
 #define MAX_DISCOUNT_PERCENT 100
 
+long quote_price(const struct item *item, int percent)
+{
+    return apply_discount(item->cents, percent) * item->qty;
+}
+
 long apply_discount(long cents, int percent)
 {
     if (percent < 0) {
         percent = 0;
     }
     if (percent > MAX_DISCOUNT_PERCENT) {
+        printf("discount capped at %d%%\n", MAX_DISCOUNT_PERCENT);
         percent = MAX_DISCOUNT_PERCENT;
     }
     return cents - round_cents(cents * percent, 100);
@@ -21,6 +27,8 @@ long apply_discount(long cents, int percent)
 long checkout(const struct cart *cart)
 {
     long total = cart->subtotal_cents;
+
+    /* The coupon comes off first, then the member discount on what is left. */
     total = apply_discount(total, cart->coupon_percent);
     total = apply_discount(total, cart->member_percent);
     return total + shipping_cents(total);
@@ -28,6 +36,9 @@ long checkout(const struct cart *cart)
 
 long shipping_cents(long total)
 {
+    if (total >= 5000) {
+        return 0;
+    }
     return total > 0 ? 599 : 0;
 }
 
